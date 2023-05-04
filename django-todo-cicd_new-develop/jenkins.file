@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages{
+        stage('Create Docker Image'){
+            steps{
+                dir('django-todo-cicd_new-develop'){
+                    sh 'sudo docker build -t cricket  .'
+                }
+            }
+        }
+        stage('Docker image'){
+            steps{
+                sh 'sudo docker images'
+            }
+        }
+        stage('build container'){
+            steps{
+                sh 'sudo docker run -dit -p 8099:8099 --name jyoo-container cricket'
+            }
+        }
+        stage('verify container'){
+            steps{
+                sh 'sudo docker ps'
+            }
+        }
+    }
+}
